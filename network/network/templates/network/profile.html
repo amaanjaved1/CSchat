@@ -1,0 +1,87 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+<section>
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-12 col-xl-4">
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-body text-center">
+            <div class="mt-3 mb-4">
+              <img src="../static/network/user.jpeg"
+                class="rounded-circle img-fluid" style="width: 100px;" />
+            </div>
+            <h4 class="mb-2">{{profile.username}}</h4>
+            {% if posts.count == 0 %}
+            <p class="text-muted mb-4">User has not posted yet</p>
+            {% else %}
+            <p class="text-muted mb-4">Last Posted <span class="mx-2">|</span>{{posts.first.post_date}}</p>
+            <div class="mb-4 pb-2">
+              <button type="button" class="btn btn-outline-primary btn-floating btn-sm" onclick="show_posts(this)">Show Posts</button>
+            </div>
+            {% endif %}
+            {% if following_profile == True %}
+            <button type="button" class="btn btn-primary btn-rounded btn-lg" onclick="follow(this, document.querySelector('#profile_{{profile.id}}'), '{{profile.id}}', '{{user}}')">
+              Unfollow
+            </button>
+            {% elif following_profile == False %}
+            <button type="button" class="btn btn-primary btn-rounded btn-lg" onclick="follow(this, document.querySelector('#profile_{{profile.id}}'), '{{profile.id}}', '{{user}}')">
+              Follow
+            </button>
+            {% endif %}
+            <div class="d-flex justify-content-between text-center mt-5 mb-2">
+              <div>
+                <p class="mb-2 h5" id="profile_{{profile.id}}">{{followers.count}}</p>
+                <p class="text-muted mb-0">Followers</p>
+              </div>
+              <div class="px-3">
+                <p class="mb-2 h5">{{following.count}}</p>
+                <p class="text-muted mb-0">Following</p>
+              </div>
+              <div>
+                <p class="mb-2 h5">{{posts.count}}</p>
+                <p class="text-muted mb-0">Posts</p>
+              </div>
+          </div>
+          <div id="show-posts">
+            {% for each in posts %}
+                <div class="card text-center">
+                    <div class="card-header">
+                        </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Subject: {{each.subject}}</h5>
+                                <p class="card-text">"{{each.content}}"</p>
+                                {% if user.is_authenticated %}
+                                    {% if user in each.likes.all %}
+                                        <a class="btn btn-outline-success btn-small" onclick="like_post('{{each.id}}', document.querySelector('#likes_{{each.id}}'), '{{user}}', this)">Unlike</a>
+                                    {% else %}
+                                        <a class="btn btn-outline-success btn-small" onclick="like_post('{{each.id}}', document.querySelector('#likes_{{each.id}}'), '{{user}}', this)">Like</a>
+                                    {% endif %}
+                                {% else %}
+                                <a class="nav-link" href="{% url 'login' %}">Login To Interact With Post</a>
+                                {% endif %}
+                                <div class="mt-3">
+                                    <label>Like(s):</label>
+                                    <label class="display-likes" id="likes_{{each.id}}">{{each.likes.count}}</label>
+                                </div>
+                            </div>
+                        <div class="card-footer text-muted">
+                        {% if each.poster == request.user %}
+                        <a class="edit-post" style="font-weight:bold">Edit Post |</a>
+                        {% endif %}
+                        {{each.post_date}}
+                        </div>
+                </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  
+</section>
+{% endblock %}
+
+

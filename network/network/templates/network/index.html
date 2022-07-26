@@ -1,0 +1,84 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <h1 style="text-align: center;">{{display_type}}</h1>
+    {% if follow_len == 0  %}
+    <h1>Follow Some Users!</h1>
+    {% endif %}
+    <div>
+        {% for each in posts %}
+            <div class="card text-center">
+                <div class="card-header">
+                    {% if each.poster == request.user %}
+                    <a href="{% url 'profile' each.poster.id%}"><span style="font-weight:bold">You Posted</span></a>
+                    {% else %}
+                    <a href="{% url 'profile' each.poster.id%}">Post by <span style="font-weight:bold">{{each.poster}}</span></a>
+                    {% endif %}
+                    </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Subject: {{each.subject}}</h5>
+                            
+                                <div class="form-group" id="content_{{each.id}}">
+                                    <p class="card-text" id="actual_content_{{each.id}}">"{{each.content}}"</p>
+                                </div>
+                          
+                            <div class="editing_form" id="edit_{{each.id}}">
+                                <textarea class="form-control" id="newedits_{{each.id}}" rows="3">{{each.content}}</textarea>
+                            </div>
+                           
+                            {% if user.is_authenticated %}
+                                {% if each.poster == request.user %}
+                                <a class="btn btn-outline-warning btn-small" onclick="edit_post(document.querySelector('#content_{{each.id}}'), '{{each.id}}', document.querySelector('#content_{{each.id}}'),document.querySelector('#edit_{{each.id}}'),document.querySelector('#newedits_{{each.id}}'), this)">Edit Post</a>
+                                {% endif %}
+                                <div class="mt-3">
+                                    {% if user in each.likes.all %}
+                                        <a class="btn btn-outline-success btn-small" onclick="like_post('{{each.id}}', document.querySelector('#likes_{{each.id}}'), '{{user}}', this)">Unlike</a>
+                                    {% else %}
+                                        <a class="btn btn-outline-success btn-small" onclick="like_post('{{each.id}}', document.querySelector('#likes_{{each.id}}'), '{{user}}', this)">Like</a>
+                                    {% endif %}
+                                </div>
+                            {% else %}
+                            <a class="nav-link" href="{% url 'login' %}">Login To Interact With Post</a>
+                            {% endif %}
+                            <div class="mt-3">
+                                <label>Like(s):</label>
+                                <label class="display-likes" id="likes_{{each.id}}">{{each.likes.count}}</label>
+                            </div>
+                        </div>
+                    <div class="card-footer text-muted">
+                    {{each.post_date}}
+                    </div>
+            </div>
+        {% endfor %}
+    </div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center pagination-lg">
+            {% if index == True %}
+                {% if previouspage %}
+                <li class="page-item"><a class="page-link" href="{% url 'index' previouspagenum %}">Previous</a></li>
+                {% else %}
+                <li class="page-item disabled"><a class="page-link">Previous</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link">{{pagenum}}</a></li>
+                {% if nextpage %}
+                <li class="page-item"><a class="page-link" href="{% url 'index' nextpagenum %}">Next</a></li>
+                {% else %}
+                <li class="page-item disabled"><a class="page-link">Next</a></li>
+                {% endif %} 
+            {% else %}
+                {% if previouspage %}
+                <li class="page-item"><a class="page-link" href="{% url 'following' previouspagenum %}">Previous</a></li>
+                {% else %}
+                <li class="page-item disabled"><a class="page-link">Previous</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link">{{pagenum}}</a></li>
+                {% if nextpage %}
+                <li class="page-item"><a class="page-link" href="{% url 'following' nextpagenum %}">Next</a></li>
+                {% else %}
+                <li class="page-item disabled"><a class="page-link">Next</a></li>
+                {% endif %} 
+            {% endif %}
+        </ul>
+      </nav>
+{% endblock %}
