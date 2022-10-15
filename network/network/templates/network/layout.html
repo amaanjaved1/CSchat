@@ -15,30 +15,25 @@
             <a class="navbar-brand" href="#">SnapGram</a>
           
             <div>
-              <ul class="navbar-nav mr-auto">
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><strong>Logged in as {{ user.username }}</strong></a>
-                    </li>
-                {% endif %}
+              <ul class="navbar-nav mr-auto d-flex flex-row">
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'index' 1 %}">All Posts</a>
+                  <a class="nav-link pr-2" href="{% url 'index' 1 %}">All Posts</a>
                 </li>
                 {% if user.is_authenticated %}
-                <li class="nav-item">
+                <li class="nav-item pr-2">
                     <a class="nav-link" href="{% url 'following' 1 %}">Following</a>
                 </li> 
-                    <li class="nav-item">
+                    <li class="nav-item pr-2">
                         <a class="nav-link" href="{% url 'add' %}">Create Post</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item pr-2">
                         <a class="nav-link" href="{% url 'profile' request.user.id %}">View Profile</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item pr-2">
                         <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
                     </li>
                 {% else %}
-                    <li class="nav-item">
+                    <li class="nav-item pr-2">
                         <a class="nav-link" href="{% url 'login' %}">Log In</a>
                     </li>
                     <li class="nav-item">
