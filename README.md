@@ -1,4 +1,4 @@
-# SnapGram
+# CSchat
 Social Media Platform Built Using Django, Javascript, and Bootstrap for Queen's University Computer Science Students.
 ## Description
 ### Tech Stack
