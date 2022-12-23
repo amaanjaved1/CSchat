@@ -1,5 +1,5 @@
 # SnapGram
-Social Media (Twitter) Simulator Built Using Django, Javascript, and Bootstrap
+Social Media Platform Built Using Django, Javascript, and Bootstrap for Queen's University Computer Science Students.
 ## Description
 ### Tech Stack
 - Django: Manages database, routing, and function calls
