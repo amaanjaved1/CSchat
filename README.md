@@ -19,7 +19,7 @@ Social Media Platform Built Using Django, Javascript, and Bootstrap for Queen's 
 1. Install Pillow ($ pip install pillow)
 
 ### How to run
-1. $ cd cs50comm
+1. $ cd network
 1. $ python3 manage.py runserver
 
 # Features
