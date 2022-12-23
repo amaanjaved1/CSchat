@@ -1,5 +1,5 @@
-# SnapGram
-Social Media (Twitter) Simulator Built Using Django, Javascript, and Bootstrap
+# CSchat
+Social Media Platform Built Using Django, Javascript, and Bootstrap for Queen's University Computer Science Students.
 ## Description
 ### Tech Stack
 - Django: Manages database, routing, and function calls
@@ -19,7 +19,7 @@ Social Media (Twitter) Simulator Built Using Django, Javascript, and Bootstrap
 1. Install Pillow ($ pip install pillow)
 
 ### How to run
-1. $ cd cs50comm
+1. $ cd network
 1. $ python3 manage.py runserver
 
 # Features
